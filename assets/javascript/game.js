@@ -4,8 +4,8 @@
 var wordChoices = ["pencil", "shoe", "happiness"];
 var wins = 0;
 var currentWord = ["x"];
-var guessesLeft = 10;
-var alreadyGuessed = [""];
+var guessesLeft = 13;
+var alreadyGuessed = [];
 
 
 // FUNCTIONS (These are bits of code that we will call upon to run when needed)
@@ -42,22 +42,32 @@ document.onkeyup = function(event){
 var letter = String.fromCharCode(event.keyCode).toLowerCase();
 	//console.log(alert("you entered " + letter));
 
-for(var j = 0; j < answerArray.length; j++){
-	console.log("answerArray in j for loop " + answerArray);
-	
-	if (letter === answerArray[j]){
-		hiddenArray[j] = answerArray[j];
-		console.log("new hidden array " + hiddenArray)
+alreadyGuessed.push(letter);
+guessesLeft--;
+
+if(guessesLeft >= 0){
+
+	for(var j = 0; j < answerArray.length; j++){
+		console.log("answerArray in j for loop " + answerArray);
+		
+		if (letter === answerArray[j]){
+			hiddenArray[j] = answerArray[j];
+			console.log("new hidden array " + hiddenArray)
+		}
 	}
+
+		if(arraysEqual(hiddenArray, answerArray)){
+			alert("hurray"); 
+			wins++;
+		}
+
+		console.log("wins = " + wins);
+		console.log("hiddenArray " + hiddenArray);
+		console.log("answerArray " + answerArray);
+		console.log("already guessed: " + alreadyGuessed);
+		console.log("Guesses Left: " + guessesLeft);
 }
 
-	if(arraysEqual(hiddenArray, answerArray)){
-		alert("hurray"); 
-		wins++;
-	}
-
-	console.log("wins = " + wins);
-	console.log("hiddenArray " + hiddenArray);
-	console.log("answerArray " + answerArray);
+else (console.log("you lose"));
 
 }

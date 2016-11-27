@@ -1,15 +1,15 @@
 // GLOBAL VARIABLES (Accessible by all functions)
 // ==================================================================================================
 
-var wordChoices = ["pencil", "shoe", "happiness"];
+var wordChoices = ["doom", "superman", "daredevil", "ironman", "spiderman", "batman", "thor", "wolverine", "flash", "hulk"];
 var wins = 0;
 var currentWord = ["x"];
 var guessesLeft = 13;
 var alreadyGuessed = [];
-var random = Math.floor(Math.random() * wordChoices.length);
-currentWord = wordChoices[random];
-var answerArray = currentWord.split("");
-console.log("answer is " + currentWord);
+// var random = Math.floor(Math.random() * wordChoices.length);
+// 		currentWord = wordChoices[random];
+// 		var answerArray = currentWord.split("");
+//console.log("answer is " + currentWord);
 var hiddenArray = [""];
 
 // FUNCTIONS (These are bits of code that we will call upon to run when needed)
@@ -26,58 +26,81 @@ var hiddenArray = [""];
     return true;
 	}
 
+
+	
+
 // MAIN PROCESS (THIS IS THE CODE THAT CONTROLS WHAT IS ACTUALLY RUN)
 // ==================================================================================================
+ 
 
- for(var i = 0; i < answerArray.length; i++){
-	hiddenArray[i] = "_";	
-	}	
+var newGame = function(){	
 
-document.getElementById("word").innerHTML = hiddenArray;
+	guessesLeft = 13;
+	alreadyGuessed = [];
+	hiddenArray = [];
 
-document.getElementById("guessesLeft").innerHTML =("Remaining Guesses: " + guessesLeft);
+	var random = Math.floor(Math.random() * wordChoices.length);
+	currentWord = wordChoices[random];
+	var answerArray = currentWord.split("");
+	console.log("answer is " + currentWord);
 
-document.getElementById("lettersGuessed").innerHTML = "Letters Guessed: "
+	for(var i = 0; i < answerArray.length; i++){
+		hiddenArray[i] = "_";	
+		document.getElementById("word").innerHTML = hiddenArray;
+		}	
 
-document.getElementById("wins").innerHTML = ("Wins: " + wins);
-
-
-document.onkeyup = function(event){
-
-	var letter = String.fromCharCode(event.keyCode).toLowerCase();
-		//console.log(alert("you entered " + letter));
-
-	guessesLeft--;
 	document.getElementById("guessesLeft").innerHTML =("Remaining Guesses: " + guessesLeft);
 
-	alreadyGuessed.push(letter);
-	document.getElementById("lettersGuessed").innerHTML = ("Letters Guessed: " + alreadyGuessed);
+	document.getElementById("lettersGuessed").innerHTML = "Letters Guessed: "
 
-	if(guessesLeft >= 0){
+	document.getElementById("wins").innerHTML = ("Wins: " + wins);
 
-		for(var j = 0; j < answerArray.length; j++){
-			console.log("answerArray in j for loop " + answerArray);
-			
-			if (letter === answerArray[j]){
-				hiddenArray[j] = answerArray[j];
-				document.getElementById("word").innerHTML = hiddenArray;
+
+	document.onkeyup = function(event){
+
+		var letter = String.fromCharCode(event.keyCode).toLowerCase();
+			//console.log(alert("you entered " + letter));
+
+		
+		document.getElementById("guessesLeft").innerHTML =("Remaining Guesses: " + guessesLeft);
+
+		alreadyGuessed.push(letter);
+		document.getElementById("lettersGuessed").innerHTML = ("Letters Guessed: " + alreadyGuessed);
+
+		if(guessesLeft >= 0){
+
+			for(var j = 0; j < answerArray.length; j++){
+				console.log("answerArray in j for loop " + answerArray);
+				
+				if (letter === answerArray[j]){
+					hiddenArray[j] = answerArray[j];
+					document.getElementById("word").innerHTML = hiddenArray;
+				}
+
 			}
 
+			if(arraysEqual(hiddenArray, answerArray)){
+				alert("hurray"); 
+				wins++;
+				newGame();
+			}
+
+			document.getElementById("wins").innerHTML = ("Wins: " + wins);
+				console.log("wins = " + wins);
+				console.log("hiddenArray " + hiddenArray);
+				console.log("answerArray " + answerArray);
+				console.log("already guessed: " + alreadyGuessed);
+				console.log("Guesses Left: " + guessesLeft);
+
+			guessesLeft--;
 		}
 
-		if(arraysEqual(hiddenArray, answerArray)){
-			alert("hurray"); 
-			wins++;
+		if (guessesLeft <= -1){
+			alert("you lose")
+			newGame();
 		}
 
-		document.getElementById("wins").innerHTML = ("Wins: " + wins);
-			console.log("wins = " + wins);
-			console.log("hiddenArray " + hiddenArray);
-			console.log("answerArray " + answerArray);
-			console.log("already guessed: " + alreadyGuessed);
-			console.log("Guesses Left: " + guessesLeft);
 	}
-
-	else (console.log("you lose"));
-
 }
+
+newGame();

@@ -6,7 +6,11 @@ var wins = 0;
 var currentWord = ["x"];
 var guessesLeft = 13;
 var alreadyGuessed = [];
-
+var random = Math.floor(Math.random() * wordChoices.length);
+currentWord = wordChoices[random];
+var answerArray = currentWord.split("");
+console.log("answer is " + currentWord);
+var hiddenArray = [""];
 
 // FUNCTIONS (These are bits of code that we will call upon to run when needed)
 // ==================================================================================================
@@ -25,49 +29,55 @@ var alreadyGuessed = [];
 // MAIN PROCESS (THIS IS THE CODE THAT CONTROLS WHAT IS ACTUALLY RUN)
 // ==================================================================================================
 
-var random = Math.floor(Math.random() * wordChoices.length);
-currentWord = wordChoices[random];
-var answerArray = currentWord.split("");
-console.log(currentWord);
-
- var hiddenArray = [""];
  for(var i = 0; i < answerArray.length; i++){
 	hiddenArray[i] = "_";	
 	}	
- console.log(hiddenArray);
+
+document.getElementById("word").innerHTML = hiddenArray;
+
+document.getElementById("guessesLeft").innerHTML =("Remaining Guesses: " + guessesLeft);
+
+document.getElementById("lettersGuessed").innerHTML = "Letters Guessed: "
+
+document.getElementById("wins").innerHTML = ("Wins: " + wins);
 
 
 document.onkeyup = function(event){
 
-var letter = String.fromCharCode(event.keyCode).toLowerCase();
-	//console.log(alert("you entered " + letter));
+	var letter = String.fromCharCode(event.keyCode).toLowerCase();
+		//console.log(alert("you entered " + letter));
 
-alreadyGuessed.push(letter);
-guessesLeft--;
+	guessesLeft--;
+	document.getElementById("guessesLeft").innerHTML =("Remaining Guesses: " + guessesLeft);
 
-if(guessesLeft >= 0){
+	alreadyGuessed.push(letter);
+	document.getElementById("lettersGuessed").innerHTML = ("Letters Guessed: " + alreadyGuessed);
 
-	for(var j = 0; j < answerArray.length; j++){
-		console.log("answerArray in j for loop " + answerArray);
-		
-		if (letter === answerArray[j]){
-			hiddenArray[j] = answerArray[j];
-			console.log("new hidden array " + hiddenArray)
+	if(guessesLeft >= 0){
+
+		for(var j = 0; j < answerArray.length; j++){
+			console.log("answerArray in j for loop " + answerArray);
+			
+			if (letter === answerArray[j]){
+				hiddenArray[j] = answerArray[j];
+				document.getElementById("word").innerHTML = hiddenArray;
+			}
+
 		}
-	}
 
 		if(arraysEqual(hiddenArray, answerArray)){
 			alert("hurray"); 
 			wins++;
 		}
 
-		console.log("wins = " + wins);
-		console.log("hiddenArray " + hiddenArray);
-		console.log("answerArray " + answerArray);
-		console.log("already guessed: " + alreadyGuessed);
-		console.log("Guesses Left: " + guessesLeft);
-}
+		document.getElementById("wins").innerHTML = ("Wins: " + wins);
+			console.log("wins = " + wins);
+			console.log("hiddenArray " + hiddenArray);
+			console.log("answerArray " + answerArray);
+			console.log("already guessed: " + alreadyGuessed);
+			console.log("Guesses Left: " + guessesLeft);
+	}
 
-else (console.log("you lose"));
+	else (console.log("you lose"));
 
 }

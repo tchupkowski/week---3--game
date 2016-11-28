@@ -4,7 +4,7 @@
 var wordChoices = ["doom", "superman", "daredevil", "ironman", "spiderman", "batman", "thor", "wolverine", "flash", "hulk"];
 var wins = 0;
 var currentWord = ["x"];
-var guessesLeft = 13;
+var guessesLeft = 14;
 var alreadyGuessed = [];
 // var random = Math.floor(Math.random() * wordChoices.length);
 // 		currentWord = wordChoices[random];
@@ -75,12 +75,10 @@ var newGame = function(){
 			//console.log(alert("you entered " + letter));
 
 		
-		document.getElementById("guessesLeft").innerHTML =("Remaining Guesses: " + guessesLeft);
-
 		alreadyGuessed.push(letter);
 		document.getElementById("lettersGuessed").innerHTML = ("Letters Guessed: " + alreadyGuessed.join(" "));
 
-		if(guessesLeft >= 0){
+		if(guessesLeft >= 1){
 
 			for(var j = 0; j < answerArray.length; j++){
 				console.log("answerArray in j for loop " + answerArray);
@@ -100,6 +98,9 @@ var newGame = function(){
 				newGame();
 			}
 
+			guessesLeft--;
+			document.getElementById("guessesLeft").innerHTML =("Remaining Guesses: " + guessesLeft);
+
 			document.getElementById("wins").innerHTML = ("Wins: " + wins);
 				console.log("wins = " + wins);
 				console.log("hiddenArray " + hiddenArray);
@@ -107,10 +108,10 @@ var newGame = function(){
 				console.log("already guessed: " + alreadyGuessed);
 				console.log("Guesses Left: " + guessesLeft);
 
-			guessesLeft--;
+			
 		}
 
-		if (guessesLeft <= -1){
+		if (guessesLeft <= 0){
 			alert("you lose")
 			newGame();
 		}

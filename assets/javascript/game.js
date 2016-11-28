@@ -26,6 +26,17 @@ var hiddenArray = [""];
     return true;
 	}
 
+	// var hiddenArrayPrint = function(){
+
+	// 	for(var i=0; i < hiddenArray.length; i++){
+
+	// 	document.getElementById("word").innerHTML += (hiddenArray[i] + " ");
+	// 	//document.write("test" + hiddenArray[i]);
+	// 	//$("word").appendTo(hiddenArray[i]);
+	// 	console.log("hidden array is"+ hiddenArray);
+	// 	}
+	// }
+
 
 	
 
@@ -46,8 +57,10 @@ var newGame = function(){
 
 	for(var i = 0; i < answerArray.length; i++){
 		hiddenArray[i] = "_";	
-		document.getElementById("word").innerHTML = hiddenArray;
-		}	
+	}	
+
+	document.getElementById("word").innerHTML = hiddenArray.join(" ");
+	//hiddenArrayPrint();
 
 	document.getElementById("guessesLeft").innerHTML =("Remaining Guesses: " + guessesLeft);
 
@@ -65,7 +78,7 @@ var newGame = function(){
 		document.getElementById("guessesLeft").innerHTML =("Remaining Guesses: " + guessesLeft);
 
 		alreadyGuessed.push(letter);
-		document.getElementById("lettersGuessed").innerHTML = ("Letters Guessed: " + alreadyGuessed);
+		document.getElementById("lettersGuessed").innerHTML = ("Letters Guessed: " + alreadyGuessed.join(" "));
 
 		if(guessesLeft >= 0){
 
@@ -74,14 +87,16 @@ var newGame = function(){
 				
 				if (letter === answerArray[j]){
 					hiddenArray[j] = answerArray[j];
-					document.getElementById("word").innerHTML = hiddenArray;
+					document.getElementById("word").innerHTML = hiddenArray.join(" ");
+					//hiddenArrayPrint();
 				}
 
 			}
 
 			if(arraysEqual(hiddenArray, answerArray)){
-				alert("hurray"); 
+				document.getElementById("word").innerHTML = hiddenArray.join(" ");
 				wins++;
+				alert("hurray"); 
 				newGame();
 			}
 

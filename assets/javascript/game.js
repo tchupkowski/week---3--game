@@ -74,9 +74,19 @@ var newGame = function(){
 		var letter = String.fromCharCode(event.keyCode).toLowerCase();
 			//console.log(alert("you entered " + letter));
 
-		
-		alreadyGuessed.push(letter);
-		document.getElementById("lettersGuessed").innerHTML = ("Letters Guessed: " + alreadyGuessed.join(" "));
+		var guessedFlag = 0;
+
+		for (var i = 0; i < alreadyGuessed.length; i++){
+			if(letter === alreadyGuessed[i]){
+				alert("you already guessed that");
+				guessedFlag = 1;
+			}
+		}
+
+		if(guessedFlag === 0){
+			alreadyGuessed.push(letter);
+			document.getElementById("lettersGuessed").innerHTML = ("Letters Guessed: " + alreadyGuessed.join(" "));
+		}
 
 		if(guessesLeft >= 1){
 
@@ -94,11 +104,15 @@ var newGame = function(){
 			if(arraysEqual(hiddenArray, answerArray)){
 				document.getElementById("word").innerHTML = hiddenArray.join(" ");
 				wins++;
-				alert("hurray"); 
+				//alert("hurray"); 
 				newGame();
 			}
 
-			guessesLeft--;
+			if (guessedFlag === 1){
+				guessesLeft++;
+				guessedFlag = 0;
+			}
+			guessesLeft--; 
 			document.getElementById("guessesLeft").innerHTML =("Remaining Guesses: " + guessesLeft);
 
 			document.getElementById("wins").innerHTML = ("Wins: " + wins);
